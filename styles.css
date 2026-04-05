@@ -863,6 +863,9 @@ nav {
     background-color: #6B0504;
     border-right: 1px solid black;
 
+    border-radius: 0 16px 16px 0; 
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.10);
+
     position: sticky;
     top: 0;
     align-self: start;
@@ -1123,8 +1126,8 @@ rotate: 180deg;
 }
 
 .search-btn img {
-    width: 22px;
-    height: 22px;
+    width: 30px;
+    height: 30px;
     filter: invert(50%) 
 }
 

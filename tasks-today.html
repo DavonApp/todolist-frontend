@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Dashboard</title>
-        <link rel="stylesheet" href="styles.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script type="text/javascript" src="app.js" defer></script>
-    </head>
-    <body class="dashboard-page">
+<head>
+    <title>Tasks Today</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="app.js" defer></script>
+</head>
+<body class="dashboard-page">
     <nav class="sidebar">
         <ul>
             <li id="toggle-li">
@@ -17,64 +15,58 @@
             </li>
             <li class="sidebar-top">
                 <a href=#>
-                <img src="Images/account_circle_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Profile Icon">
-                <span class="username">User</span>
+                    <img src="Images/account_circle_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Profile Icon">
+                    <span class="username">User</span>
                 </a>
             </li>
-
             <li class="sidebar-section-label"><span>Main</span></li>
-
-            <li class="active">
+            <li>
                 <a href="dashboard.html">
-                <img src="Images/home_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Dashboard Icon">
-                <span>Dashboard</span>
+                    <img src="Images/home_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Dashboard Icon">
+                    <span>Dashboard</span>
                 </a>
             </li>
             <li>
                 <button onclick=toggleSubMenu(this) class="dropdown-btn">
-                <img src="Images/check_box_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Tasks Icon">
-                <span>Tasks</span>
-                <img src="Images/arrow_drop_down_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Dropdown Icon">
+                    <img src="Images/check_box_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Tasks Icon">
+                    <span>Tasks</span>
+                    <img src="Images/arrow_drop_down_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Dropdown Icon">
                 </button>
                 <ul class="tasks-sub-menu">
                     <div>
-                        <li><a href="tasks-today.html">Today</a></li>
+                        <li class="active"><a href="tasks-today.html">Today</a></li>
                         <li><a href=#>Upcoming</a></li>
                         <li><a href=#>All Tasks</a></li>
                         <li><a href=#>Completed</a></li>
                     </div>
                 </ul>
             </li>
-
             <li class="sidebar-divider"></li>
             <li class="sidebar-section-label"><span>General</span></li>
-
             <li>
                 <a href="calendar.html">
-                <img src="Images/calendar_month_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Calendar Icon">
-                <span>Calendar</span>
+                    <img src="Images/calendar_month_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Calendar Icon">
+                    <span>Calendar</span>
                 </a>
             </li>
             <li>
                 <a href="settings.html">
-                <img src="Images/settings_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Settings Icon">
-                <span>Settings</span>
+                    <img src="Images/settings_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Settings Icon">
+                    <span>Settings</span>
                 </a>
             </li>
-            
             <li class="sidebar-divider"></li>
-
             <li class="logout">
                 <a href=#>
-                <img src="Images/logout_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Logout Icon">
-                <span>Logout</span>
+                    <img src="Images/logout_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Logout Icon">
+                    <span>Logout</span>
                 </a>
             </li>
         </ul>
     </nav>
     <div class="dashboard-content">
         <div class="dashboard-header">
-            <h2>Dashboard</h2>
+            <h2>Today</h2>
             <div class="search-container">
                 <input type="text" id="search-input" class="search-input" placeholder="Search tasks...">
                 <button class="search-btn" onclick="toggleSearch()">
@@ -83,7 +75,6 @@
             </div>
         </div>
         <div class="task-list" id="task-list"></div>
-        <button class="add-task-btn" onclick="addTask()">+ Add Task</button>
     </div>
 </body>
 </html>
