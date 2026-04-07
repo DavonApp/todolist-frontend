@@ -48,6 +48,13 @@ p {
     letter-spacing: 0;
 }
 
+small {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0;
+}
+
 .nav__links li, .nav__links a {
     display: inline-block;
     padding: 10px 10px;
@@ -1394,3 +1401,164 @@ span.flatpickr-weekday {
 .delete-btn:hover {
     color: #6B0504;
 }
+
+.settings-layout {
+    display: flex;
+    border-top: 2px solid #e0e0e0; 
+    margin-top: 10px;
+}
+
+.settings-nav {
+    width: 200px;
+    flex-shrink: 0;
+    border-right: 2px solid #e0e0e0; 
+    padding-top: 20px;
+    min-height: 60vh;
+}
+
+.settings-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.settings-nav ul li a {
+    display: block;
+    padding: 10px 16px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #222;
+    text-decoration: none;
+    border-radius: 8px;
+    margin: 4px 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.settings-nav ul li a:hover {
+    background-color: #f0e0e0;
+    color: #6B0504;
+}
+
+.settings-nav ul li.active a {
+    background-color: #6B0504;
+    color: #ffffff;
+}
+
+.settings-content {
+    flex: 1;
+    padding: 24px 32px;
+}
+
+.settings-content-row1 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.settings-content-row1-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.settings-content-row1-right .upload-svg {
+    width: 60px;
+    height: 60px;
+    fill: #777;
+}
+
+.settings-content-row1-right .upload-svg:hover {
+    cursor: pointer;
+    fill: #333;
+    transition: fill 0.2s ease;
+}
+
+.settings-content-row1-right .delete-svg {
+    width: 60px;
+    height: 60px;
+    fill: #777;
+}
+
+.settings-content-row1 .delete-svg:hover {
+    cursor: pointer;
+    fill: #6B0504;
+    transition: fill 0.2s ease;
+}
+
+.settings-content-row1 .profile-svg  {
+    width: 100px;
+    height: 100px;
+    fill: #6B0504;
+}
+
+.settings-divider {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin: 24px 0;
+}
+
+.settings-content-row2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-input {
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0;
+    color: #000000;
+    font-family: 'Roboto', sans-serif;
+    outline: none;
+}
+
+.profile-input:not([readonly]) {
+    border-bottom: 1px solid #6B0504;
+    color: #222;
+}
+
+.settings-content-row2-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-content-row2-right {
+    display: flex;
+    
+}
+
+.settings-content-row2-right button {
+    background: none;
+    border: 1px solid #000000;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.settings-content-row2-right button:hover {
+    background-color: #E5E7EB;
+    transition: background-color 0.2s ease, color 0.2s ease;;
+}
+
+
+.settings-content-row3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.settings-content-row3-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.email-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+

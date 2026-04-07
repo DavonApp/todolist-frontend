@@ -114,3 +114,25 @@ function filterTasks(query) {
         card.style.display = match ? '' : 'none';
     });
 }
+
+function toggleEdit(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const isEditing = !input.readOnly;
+    const label = btn.querySelector('p');
+
+    if (isEditing) {
+        // Save clicked
+        input.readOnly = true;
+        label.textContent = 'Edit';
+        btn.classList.remove('saving');
+        // Later: add your fetch/POST call here to save to backend
+    } else {
+        // Edit clicked
+        input.readOnly = false;
+        input.focus();
+        label.textContent = 'Save';
+        btn.classList.add('saving');
+    }
+}
+
+btn.classList.toggle('saving');
