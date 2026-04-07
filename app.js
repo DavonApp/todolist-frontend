@@ -45,9 +45,9 @@ function createTaskCard() {
                 <option value="School">School</option>
                 <option value="Other">Other</option>
             </select>
-            <select class="task-priority-input">
-                <option value="">Priority</option>
-                <option value="Hight">High</option>
+            <select class="task-priority-input priority-default" onchange="updatePriorityColor(this)">
+                <option value="Priority">Priority</option>
+                <option value="High">High</option>
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
             </select>
@@ -57,6 +57,16 @@ function createTaskCard() {
     flatpickr(task.querySelector('.task-due-input'), { dateFormat: "m/d/Y" });
 
     return task;
+}
+
+function updatePriorityColor(select) {
+    select.className = 'task-priority-input';
+    switch(select.value) {
+        case 'High': select.classList.add('priority-high'); break;
+        case 'Medium': select.classList.add('priority-medium'); break;
+        case 'Low': select.classList.add('priority-low'); break;
+        default: select.classList.add('priority-default');
+    }
 }
 
 function addTask() {
@@ -158,3 +168,8 @@ function toggleDeleteModal() {
 document.getElementById('delete-modal').addEventListener('click', function(e) {
     if (e.target === this) toggleDeleteModal();
 });
+
+function setView(btn) {
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
