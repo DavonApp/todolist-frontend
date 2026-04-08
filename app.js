@@ -48,6 +48,37 @@ function toggleSubMenu(button) {
     }
 }
 
+// ==========================
+// SEARCH TOGGLE
+// ==========================
+
+/*
+    Toggles the search input open/closed.
+    Targets the parent .search-container with the "open" class,
+    which CSS already uses to reveal the input via .search-container.open .search-input.
+    Focuses the input on open so the user can type immediately.
+    Clears and collapses on close to reset state for next use.
+*/
+function toggleSearch() {
+    const container = document.querySelector('.search-container');
+    if (!container) return; // Defensive check in case element isn't on the page
+
+    const isOpen = container.classList.toggle('open');
+
+    if (isOpen) {
+        // Expand: focus after transition starts so cursor appears in the field
+        const input = document.getElementById('search-input');
+        if (input) input.focus();
+    } else {
+        // Collapse: clear value and reset task visibility
+        const input = document.getElementById('search-input');
+        if (input) {
+            input.value = '';
+            filterTasks(''); // Reset any active search filter
+        }
+    }
+}
+
 
 // ==========================
 // TASK CARD SYSTEM
