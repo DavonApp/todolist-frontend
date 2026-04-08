@@ -318,6 +318,72 @@ function cancelEdit(inputId, btn) {
     if (editBtn) editBtn.textContent = 'Edit';
 }
 
+// =============================
+// SETTINGS PASSWORD FORM TOGGLE
+// =============================
+/*
+    Toggles the inline password change form open/closed.
+    Clears all three fields on collapse to avoid stale input
+    persisting if the user reopens the form.
+*/
+function togglePasswordForm() {
+    const form = document.getElementById('password-form');
+    if (!form) return;
+
+    const isOpen = form.style.display !== 'none';
+
+    if (isOpen) {
+        // Collapse and wipe fields — don't leave passwords sitting in the DOM
+        form.style.display = 'none';
+        document.getElementById('current-password').value = '';
+        document.getElementById('new-password').value = '';
+        document.getElementById('confirm-password').value = '';
+    } else {
+        form.style.display = 'flex';
+        document.getElementById('current-password').focus();
+    }
+}
+
+/*
+    Placeholder for password save logic.
+    Validates that new and confirm fields match before proceeding.
+    Replace the console.log with a real API call when backend is ready.
+*/
+function savePassword() {
+    const current = document.getElementById('current-password').value;
+    const next    = document.getElementById('new-password').value;
+    const confirm = document.getElementById('confirm-password').value;
+
+    // Basic client-side guard — backend should validate as well
+    if (!current || !next || !confirm) return;
+
+    if (next !== confirm) {
+        // TODO: replace with a proper inline error message
+        console.warn('Passwords do not match.');
+        return;
+    }
+
+    // TODO: wire up to backend
+    console.log('Password change submitted.');
+    togglePasswordForm();
+}
+
+// ============================
+// SETTINGS DELETE MODAL TOGGLE
+// ============================
+
+/*
+    Toggles the delete account confirmation modal.
+    Uses display toggling to match your existing modal-overlay pattern.
+*/
+function toggleDeleteModal() {
+    const modal = document.getElementById('delete-modal');
+    if (!modal) return;
+
+    // Flip between hidden and visible — CSS handles the overlay styling
+    modal.style.display = modal.style.display === 'none' ? 'flex' : 'none';
+}
+
 
 // ==========================
 // CALENDAR CONTROLS
