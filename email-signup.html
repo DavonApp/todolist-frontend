@@ -1,42 +1,120 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="styles.css">
-        <title>Email Sign Up</title>
-    </head>
-    <body class="email-signup-page">
-        <div class="email-signup-content">
+<head>
+    <!-- External stylesheet  -->
+    <link rel="stylesheet" href="styles.css">
 
-            <a href="signup.html" class="back-button">&#8592;</a>
-            
-            <h2>Sign Up</h2>
-            <p>Enter your details below to get started.</p>
-            <form class="signup-form" id="signup-form">
-                <div class="signup-form-group">
-                    <label for="email-address">Email address</label>
-                    <input type="text" id="email-address" placeholder="Enter your email address...">
-                </div>
-                <div class="signup-form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password...">
-                </div>
-            </form>
+    <!-- Clear page title for user context + browser tab -->
+    <title>Email Sign Up</title>
+</head>
 
-            <button class="signup-email-button" type="submit" form="signup-form">Sign up with Email</button>
+<body class="email-signup-page">
 
-            <p>Already have an account? <a class="signup-links" href="login.html">Log in</a></p>
+    <!-- 
+        Container for centered signup UI.
+    -->
+    <div class="email-signup-content">
 
-            <p><a class="signup-links" href="forgot-password.html">Forgot your password?</a></p>
+        <!-- 
+            Back navigation improves UX by allowing users to easily return 
+            without relying on browser controls.
+        -->
+        <a href="signup.html" class="back-button">&#8592;</a>
+        
+        <!-- Primary heading establishes clear intent -->
+        <h2>Sign Up</h2>
 
-            <div class="or-divider">
-                <span>or</span>
+        <!-- Supporting text -->
+        <p>Enter your details below to get started.</p>
+
+        <!-- 
+            Form is separated from submit button to allow flexible layout/styling.
+            Also enables reuse of button positioning without restructuring form.
+        -->
+        <form class="signup-form" id="signup-form">
+
+            <!-- Email input group -->
+            <div class="signup-form-group">
+
+                <!-- Label improves accessibility and usability -->
+                <label for="email-address">Email address</label>
+
+                <!-- 
+                    Using type="text" for now (can be upgraded to type="email" 
+                    for built-in validation in future iterations)
+                -->
+                <input 
+                    type="email" required
+                    id="email-address" 
+                    placeholder="Enter your email address...">
             </div>
 
-            <a class="signup-google-button" href=#>Continue with Google</a>
+            <!-- Password input group -->
+            <div class="signup-form-group">
 
-            <p>By signing up and creating an<br>
-            account I accept <a class="signup-links" href="tos.html">Terms of Use</a><br>
-            and <a class="signup-links" href="privacy-policy.html">Privacy Policy.</a></p>
+                <label for="password">Password</label>
+
+                <!-- Password field hides input for security -->
+                <input 
+                    type="password" required 
+                    id="password" 
+                    placeholder="Enter your password...">
+            </div>
+
+        </form>
+
+        <!-- 
+            Submit button placed outside form for layout flexibility.
+            Uses "form" attribute to still trigger form submission.
+        -->
+        <button 
+            class="signup-email-button" 
+            type="submit" 
+            form="signup-form">
+            Sign up with Email
+        </button>
+
+        <!-- Existing user navigation -->
+        <p>
+            Already have an account? 
+            <a class="signup-links" href="login.html">Log in</a>
+        </p>
+
+        <!-- Password recovery -->
+        <p>
+            <a class="signup-links" href="forgot-password.html">
+                Forgot your password?
+            </a>
+        </p>
+
+        <!-- 
+            Divider visually separates authentication methods.
+        -->
+        <div class="or-divider">
+            <span>or</span>
         </div>
-    </body>
+
+        <!-- 
+            Placeholder for OAuth integration (e.g., Firebase/Google Auth).
+        -->
+        <a class="signup-google-button" href="#">
+            Continue with Google
+        </a>
+
+        <!-- 
+            Legal acknowledgment 
+        -->
+        <p>
+            By signing up and creating an<br>
+            account I accept 
+            <a class="signup-links" href="tos.html">Terms of Use</a><br>
+            and 
+            <a class="signup-links" href="privacy-policy.html">
+                Privacy Policy.
+            </a>
+        </p>
+
+    </div>
+
+</body>
 </html>
