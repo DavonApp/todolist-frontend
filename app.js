@@ -260,6 +260,64 @@ function filterTasks(query) {
     });
 }
 
+// ==========================
+// PROFILE EDIT TOGGLE
+// ==========================
+
+/*
+    Toggles a profile input field between read-only and editable states.
+    Saves the previous value so the user can cancel without losing data.
+    Accepts the input's ID and the button element that triggered the call.
+*/
+function toggleEdit(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return; // Defensive check if element isn't on the page
+
+    const isEditing = !input.readOnly;
+
+    if (isEditing) {
+        // Save mode: lock the field and persist the new value ---
+        input.readOnly = true;
+        input.classList.remove('profile-input-active');
+        btn.querySelector('p').textContent = 'Edit';
+
+        // Clear saved fallback — value is now committed
+        delete input.dataset.prevValue;
+    } else {
+        // Edit mode: unlock the field and focus it ---
+        input.readOnly = false;
+        input.classList.add('profile-input-active');
+        input.focus();
+        btn.querySelector('p').textContent = 'Save';
+
+        // Store current value so Cancel can restore it
+        input.dataset.prevValue = input.value;
+    }
+}
+
+/*
+    Cancels an in-progress edit and restores the previous value.
+    Only shown while a field is actively being edited.
+*/
+function cancelEdit(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+
+    // Restore the saved value if it exists
+    if (input.dataset.prevValue !== undefined) {
+        input.value = input.dataset.prevValue;
+        delete input.dataset.prevValue;
+    }
+
+    input.readOnly = true;
+    input.classList.remove('profile-input-active');
+
+    // Reset the sibling Edit button text
+    const editBtn = btn.closest('.settings-content-row2-right, .settings-content-row3 .settings-content-row2-right')
+                        ?.querySelector('.edit-button p');
+    if (editBtn) editBtn.textContent = 'Edit';
+}
+
 
 // ==========================
 // CALENDAR CONTROLS
