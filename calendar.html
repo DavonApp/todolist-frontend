@@ -1,43 +1,81 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Calendar</title>
-        <link rel="stylesheet" href="styles.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<head>
+    <!-- Page title shown in browser tab -->
+    <title>Calendar</title>
 
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-        <script type="text/javascript" src="app.js" defer></script>
-    </head>
-    <body class="dashboard-page">
+    <!-- Main stylesheet for consistent dashboard styling -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Flatpickr styles for date-picker UI consistency -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- 
+        External libraries loaded via CDN:
+        - Flatpickr: lightweight date picker for task scheduling
+        - FullCalendar: advanced calendar UI for visualizing tasks/events
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+    <!-- 
+        Main application script
+    -->
+    <script type="text/javascript" src="app.js" defer></script>
+</head>
+
+<body class="dashboard-page">
+
+    <!-- 
+        Sidebar acts as the primary navigation system across the dashboard.
+    -->
     <nav class="sidebar">
         <ul>
+
+            <!-- Toggle button for collapsing/expanding sidebar -->
             <li id="toggle-li">
-                <button onclick=toggleSidebar() id="toggle-btn">
-                    <img src="Images/double_arrow_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Double Arrow Icon Right">
+                <button onclick="toggleSidebar()" id="toggle-btn">
+                    <img src="Images/double_arrow_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" 
+                         alt="Toggle Sidebar">
                 </button>
             </li>
+
+            <!-- User profile shortcut -->
             <li class="sidebar-top">
                 <a href="profile.html">
-                <img src="Images/account_circle_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Profile Icon">
-                <span class="username">User</span>
+                    <img src="Images/account_circle_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" 
+                         alt="Profile Icon">
+
+                    <!-- Placeholder username (to be dynamically populated later) -->
+                    <span class="username">User</span>
                 </a>
             </li>
 
+            <!-- Section label  -->
             <li class="sidebar-section-label"><span>Main</span></li>
 
+            <!-- Dashboard link -->
             <li>
                 <a href="dashboard.html">
-                <img src="Images/home_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Dashboard Icon">
-                <span>Dashboard</span>
+                    <img src="Images/home_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" 
+                         alt="Dashboard Icon">
+                    <span>Dashboard</span>
                 </a>
             </li>
+
+            <!-- 
+                Tasks section uses dropdown to group related pages.
+            -->
             <li>
-                <button onclick=toggleSubMenu(this) class="dropdown-btn">
-                <img src="Images/check_box_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Tasks Icon">
-                <span>Tasks</span>
-                <img src="Images/arrow_drop_down_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Dropdown Icon">
+                <button onclick="toggleSubMenu(this)" class="dropdown-btn">
+                    <img src="Images/check_box_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" 
+                         alt="Tasks Icon">
+                    <span>Tasks</span>
+                    <img src="Images/arrow_drop_down_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" 
+                         alt="Dropdown Icon">
                 </button>
+
+                <!-- Submenu for task categories -->
                 <ul class="tasks-sub-menu">
                     <div>
                         <li><a href="tasks-today.html">Today</a></li>
@@ -47,43 +85,95 @@
                 </ul>
             </li>
 
+            <!-- Visual separator -->
             <li class="sidebar-divider"></li>
+
             <li class="sidebar-section-label"><span>General</span></li>
 
+            <!-- 
+                Active page indicator 
+            -->
             <li class="active">
                 <a href="calendar.html">
-                <img src="Images/calendar_month_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Calendar Icon">
-                <span>Calendar</span>
+                    <img src="Images/calendar_month_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" 
+                         alt="Calendar Icon">
+                    <span>Calendar</span>
                 </a>
             </li>
+
+            <!-- Settings page -->
             <li>
                 <a href="settings.html">
-                <img src="Images/settings_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Settings Icon">
-                <span>Settings</span>
+                    <img src="Images/settings_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" 
+                         alt="Settings Icon">
+                    <span>Settings</span>
                 </a>
             </li>
             
             <li class="sidebar-divider"></li>
 
+            <!-- 
+                Logout action placeholder.
+            -->
             <li class="logout">
-                <a href=#>
-                <img src="Images/logout_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Logout Icon">
-                <span>Logout</span>
+                <a href="#">
+                    <img src="Images/logout_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" 
+                         alt="Logout Icon">
+                    <span>Logout</span>
                 </a>
             </li>
+
         </ul>
     </nav>
+
+    <!-- 
+        Main content area for calendar feature.
+    -->
     <div class="calendar-content">
+
+        <!-- Header -->
         <div class="calendar-header">
+
+            <!-- Placeholder greeting (to be dynamically personalized later) -->
             <h2>Hello, User</h2>
+
+            <!-- Motivational microcopy -->
             <p>You're doing a great job. Keep being productive!</p>
+
+            <!-- 
+                Calendar view toggle allows switching between Month/Week/Day views.
+                Improves flexibility for different planning styles.
+            -->
             <div class="calendar-view-toggle">
-                <button class="view-btn active" onclick="changeCalendarView('dayGridMonth', this)"><span>Month</span></button>
-                <button class="view-btn" onclick="changeCalendarView('timeGridWeek', this)"><span>Week</span></button>
-                <button class="view-btn" onclick="changeCalendarView('timeGridDay', this)"><span>Day</span></button>
+
+                <!-- Default active view -->
+                <button 
+                    class="view-btn active" 
+                    onclick="changeCalendarView('dayGridMonth', this)">
+                    <span>Month</span>
+                </button>
+
+                <button 
+                    class="view-btn" 
+                    onclick="changeCalendarView('timeGridWeek', this)">
+                    <span>Week</span>
+                </button>
+
+                <button 
+                    class="view-btn" 
+                    onclick="changeCalendarView('timeGridDay', this)">
+                    <span>Day</span>
+                </button>
             </div>
         </div>
+
+        <!-- 
+            Calendar container.
+            FullCalendar dynamically renders into this element.
+        -->
         <div id="calendar" style="margin-top: 20px;"></div>
+
     </div>
+
 </body>
 </html>
