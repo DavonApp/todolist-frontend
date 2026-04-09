@@ -9,6 +9,29 @@ let calendar;
 const toggleButton = document.getElementById('toggle-btn');
 const sidebar = document.querySelector('.sidebar');
 
+const API_BASE = 'http://localhost:8080/api/tasks';
+
+// Converts flatpickr's m/d/Y to yyyy-MM-dd that Java's LocalDate expects
+function formatDateForBackend(dateStr) {
+    if (!dateStr) return null;
+    const [month, day, year] = dateStr.split('/');
+    return `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}`;
+}
+
+// Reads all values off a task card and returns a plain object
+function getTaskDataFromCard(card) {
+    return {
+        title:       card.querySelector('.task-title-input').value,
+        description: card.querySelector('.task-desc-input').value,
+        dueDate:     formatDateForBackend(card.querySelector('.task-due-input').value),
+        dueTime:     card.querySelector('.task-time-input').value || null,
+        category:    card.querySelector('.task-category-input').value || null,
+        priority:    card.querySelector('.task-priority-input').value === 'Priority' 
+                         ? null 
+                         : card.querySelector('.task-priority-input').value.toUpperCase(),
+        isCompleted: card.querySelector('input[type="checkbox"]').checked
+    };
+}
 
 // ==========================
 // SIDEBAR INTERACTIONS
@@ -196,9 +219,50 @@ function createTaskCard(isTodayPage = false, isCompletedPage = false, isUpcoming
         };
     }
 
+    // Change event for flatpickr to save date
+    fpOptions.onClose = function() {
+        saveTaskCard(task);
+    };
+
+    // time input needs its own listener added after the element exists
+    const timeInput = task.querySelector('.task-time-input');
+    timeInput.addEventListener('change', () => saveTaskCard(task));
+    timeInput.addEventListener('blur', () => saveTaskCard(task));
+
+
     // Attach flatpickr to wrapper (enables clicking icon to open calendar)
     flatpickr(task.querySelector('.task-due-wrapper'), fpOptions);
 
+     // Auto-saves whenever user leaves any input field
+    task.querySelectorAll('.task-title-input, .task-desc-input, .task-category-input, .task-priority-input').forEach(input => {
+        input.addEventListener('change', () => saveTaskCard(task));
+    });
+
+
+    async function saveTaskCard(card) {
+        const taskId = card.dataset.taskId;
+        const data = getTaskDataFromCard(card);
+
+        if (!data.title) return; // Don't save empty tasks
+
+        if (taskId) {
+            // Already exists — update it
+            await fetch(`${API_BASE}/${taskId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        } else {
+            // Brand new task — create it and store the returned ID
+            const res = await fetch(API_BASE, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const created = await res.json();
+            card.dataset.taskId = created.id; // Store ID for future updates
+        }
+    }
     return task;
 }
 
@@ -242,16 +306,23 @@ function updatePriorityColor(select) {
     Toggles task completion state visually.
     Also enforces filtering logic on Completed page.
 */
-function toggleComplete(checkbox) {
+async function toggleComplete(checkbox) {
     const card = checkbox.closest('.task-card');
     const title = card.querySelector('.task-title-input');
+    const taskId = card.dataset.taskId;
 
     title.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
-    title.style.opacity = checkbox.checked ? '0.4' : '1';
+    title.style.opacity        = checkbox.checked ? '0.4' : '1';
+
+    if (taskId) {
+        await fetch(`${API_BASE}/${taskId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(getTaskDataFromCard(card))
+        });
+    }
 
     const pageTitle = document.querySelector('.dashboard-header h2')?.textContent.trim();
-
-    // Hide task if it no longer belongs on Completed page
     if (pageTitle === 'Completed' && !checkbox.checked) {
         card.style.display = 'none';
     }
@@ -259,11 +330,17 @@ function toggleComplete(checkbox) {
 
 
 /*
-    Removes task card from DOM.
-    Simple client-side deletion (no persistence yet).
+    Removes task card 
 */
-function deleteTask(btn) {
-    btn.closest('.task-card').remove();
+async function deleteTask(btn) {
+    const card = btn.closest('.task-card');
+    const taskId = card.dataset.taskId;
+
+    if (taskId) {
+        await fetch(`${API_BASE}/${taskId}`, { method: 'DELETE' });
+    }
+
+    card.remove();
 }
 
 
@@ -443,7 +520,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize task system if on task-related page
     if (document.getElementById('task-list')) {
-        addTask();
+        loadTasks();
+    }
+
+    async function loadTasks() {
+    const res = await fetch(API_BASE);
+    const tasks = await res.json();
+
+    const pageTitle = document.querySelector('.dashboard-header h2')?.textContent.trim();
+
+    tasks.forEach(task => {
+        // Filter tasks to the right page
+        if (pageTitle === 'Today') {
+            const today = new Date().toISOString().split('T')[0];
+            if (task.dueDate !== today) return;
+        }
+        if (pageTitle === 'Upcoming') {
+            const today = new Date().toISOString().split('T')[0];
+            if (!task.dueDate || task.dueDate <= today) return;
+        }
+        if (pageTitle === 'Completed' && !task.isCompleted) return;
+
+        renderTaskCard(task, pageTitle);
+    });
+
+    // Always keep the blank "add new" card at the bottom
+    addTask();
+    }
+
+    function renderTaskCard(task, pageTitle) {
+    const taskList = document.getElementById('task-list');
+    const card = createTaskCard(
+        pageTitle === 'Today',
+        pageTitle === 'Completed',
+        pageTitle === 'Upcoming'
+    );
+
+    // Store the backend ID on the card so save/delete know which task to target
+    card.dataset.taskId = task.id;
+
+    card.querySelector('.task-title-input').value       = task.title || '';
+    card.querySelector('.task-desc-input').value        = task.description || '';
+    card.querySelector('.task-time-input').value        = task.dueTime ? task.dueTime.slice(0,5) : '';
+    card.querySelector('.task-category-input').value    = task.category || '';
+
+    // Convert yyyy-MM-dd back to m/d/Y for flatpickr display
+    if (task.dueDate) {
+        const [y, m, d] = task.dueDate.split('-');
+        card.querySelector('.task-due-input').value = `${parseInt(m)}/${parseInt(d)}/${y}`;
+    }
+
+    if (task.priority) {
+        const sel = card.querySelector('.task-priority-input');
+        sel.value = task.priority.charAt(0) + task.priority.slice(1).toLowerCase();
+        updatePriorityColor(sel);
+    }
+
+    if (task.isCompleted) {
+        const checkbox = card.querySelector('input[type="checkbox"]');
+        const title    = card.querySelector('.task-title-input');
+        checkbox.checked = true;
+        title.style.textDecoration = 'line-through';
+        title.style.opacity = '0.4';
+    }
+
+    taskList.appendChild(card);
     }
 
     // Attach live search filtering
