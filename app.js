@@ -24,7 +24,7 @@ function getTaskDataFromCard(card) {
         title:       card.querySelector('.task-title-input').value,
         description: card.querySelector('.task-desc-input').value,
         dueDate:     formatDateForBackend(card.querySelector('.task-due-input').value),
-        dueTime:     card.querySelector('.task-time-input').value || null,
+        dueTime:     card.dataset.dueTime || null,
         category:    card.querySelector('.task-category-input').value || null,
         priority:    card.querySelector('.task-priority-input').value === 'Priority' 
                          ? null 
@@ -224,14 +224,47 @@ function createTaskCard(isTodayPage = false, isCompletedPage = false, isUpcoming
         saveTaskCard(task);
     };
 
-    // time input needs its own listener added after the element exists
     const timeInput = task.querySelector('.task-time-input');
-    timeInput.addEventListener('change', () => saveTaskCard(task));
-    timeInput.addEventListener('blur', () => saveTaskCard(task));
+    timeInput.placeholder = "Time";
 
 
     // Attach flatpickr to wrapper (enables clicking icon to open calendar)
     flatpickr(task.querySelector('.task-due-wrapper'), fpOptions);
+
+
+    // Time picker using flatpickr for cross-browser consistency
+    flatpickr(task.querySelector('.task-time-input'),{  
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "h:i K",
+        altInput: true,
+        time_24hr: false,
+        defaultDate: "09:00",
+        onReady: function(selectedDates, dateStr, instance) {
+            if (dateStr) {
+                task.dataset.dueTime = instance.formatDate(selectedDates[0], "H:i:s")
+            }
+        },
+        onClose: function(selectedDates, dateStr, instance) {
+            if(!selectedDates.length) {
+                task.dataset.dueTime = null;
+                saveTaskCard(task);
+                return;
+            }
+            
+            const date = selectedDates[0];
+
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = "00";
+
+            const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+            task.dataset.dueTime = formattedTime;
+
+            saveTaskCard(task);
+        }
+    });
 
      // Auto-saves whenever user leaves any input field
     task.querySelectorAll('.task-title-input, .task-desc-input, .task-category-input, .task-priority-input').forEach(input => {
@@ -561,8 +594,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     card.querySelector('.task-title-input').value       = task.title || '';
     card.querySelector('.task-desc-input').value        = task.description || '';
-    card.querySelector('.task-time-input').value        = task.dueTime ? task.dueTime.slice(0,5) : '';
     card.querySelector('.task-category-input').value    = task.category || '';
+    card.dataset.dueTime = task.dueTime || null;
+
+    if (task.dueTime) {
+    const timeInput = card.querySelector('.task-time-input');
+    const fpInstance = timeInput._flatpickr;
+    if (fpInstance) {
+        fpInstance.setDate(task.dueTime); // e.g. "02:00:00"
+    }
+}
 
     // Convert yyyy-MM-dd back to m/d/Y for flatpickr display
     if (task.dueDate) {

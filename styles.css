@@ -1276,6 +1276,8 @@ rotate: 180deg;
     color: #444;
     outline: none;
     cursor: pointer;
+
+    width: 70px;
 }
 /* The Standard Text Selection */
 ::selection {
