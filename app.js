@@ -591,7 +591,17 @@ function changeCalendarView(viewName, btnElement) {
     Ensures scripts only run after DOM is fully loaded,
     preventing null reference errors.
 */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    // Check if user is logged in before loading anything
+    const authCheck = await fetch('http://localhost:8080/api/auth/me', {
+        credentials: 'include'
+    });
+
+    if (!authCheck.ok) {
+        window.location.href = 'login.html';
+        return; // Stop everything else from running
+    }
 
     // Initialize task system if on task-related page
     if (document.getElementById('task-list')) {
