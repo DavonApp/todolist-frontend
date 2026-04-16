@@ -622,7 +622,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize task system if on task-related page
     if (document.getElementById('task-list')) {
-        loadTasks();
+        await loadTasks();
     }
 
     async function loadTasks() {
@@ -685,7 +685,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Convert yyyy-MM-dd back to m/d/Y for flatpickr display
     if (task.dueDate) {
         const [y, m, d] = task.dueDate.split('-');
-        card.querySelector('.task-due-input').value = `${parseInt(m)}/${parseInt(d)}/${y}`;
+        const fp = card.querySelector('.task-due-wrapper')._flatpickr;
+        if (fp) fp.setDate(`${parseInt(m)}/${parseInt(d)}/${y}`, false); // false = don't trigger onChange
     }
 
     if (task.priority) {
