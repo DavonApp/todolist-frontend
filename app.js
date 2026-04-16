@@ -556,23 +556,47 @@ function togglePasswordForm() {
     Validates that new and confirm fields match before proceeding.
     Replace the console.log with a real API call when backend is ready.
 */
-function savePassword() {
+async function savePassword() {
     const current = document.getElementById('current-password').value;
     const next    = document.getElementById('new-password').value;
     const confirm = document.getElementById('confirm-password').value;
 
     // Basic client-side guard — backend should validate as well
-    if (!current || !next || !confirm) return;
+    if (!current || !next || !confirm) {
+        alert("Please fill in all fields");
+    }
 
     if (next !== confirm) {
-        // TODO: replace with a proper inline error message
-        console.warn('Passwords do not match.');
+        alert("New passwords do not match.")
         return;
     }
 
-    // TODO: wire up to backend
-    console.log('Password change submitted.');
-    togglePasswordForm();
+    try {
+        const res = await fetch('http:localhost:8080/api/user/password', {
+            method: 'PUT',
+            header: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            body: JSON.stringify({
+                currentPassword: current,
+                newPassword: next
+            })
+        });
+
+        const message = await res.text();
+
+        if (!res.ok) {
+            alert(message); // backend error message
+        }
+
+        alert("Passowrd update sucessfully")
+
+        // Reset form + close form 
+        togglePasswordForm();
+
+    } catch (err) {
+        console.error("Error:", err);
+        alert("Something went wrong. Try again.");
+    }
 }
 
 // ============================
