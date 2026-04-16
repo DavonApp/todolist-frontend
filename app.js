@@ -140,6 +140,19 @@ function toggleSearch() {
     }
 }
 
+// ==========================
+// LOGOUT
+// ==========================
+
+async function logout() {
+    await fetch('http://localhost:8080/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include' // sends session cookie so backend can invalidate it
+    });
+
+    window.location.href = 'login.html';
+}
+
 
 // ==========================
 // TASK CARD SYSTEM
