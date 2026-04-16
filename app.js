@@ -634,6 +634,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         return; // Stop everything else from running
     }
 
+
+    // Load profile on every page - populates sidebar and form fields if present
+    const profileRes = await fetch ('http://localhost:8080/api/user/profile', {
+        credentials: 'include'
+    });
+
+    if (profileRes.ok) {
+        const profile = await profileRes.json();
+
+        // Sidebar username syncs on every page
+        const usernameSpan = document.querySelector('.sidebar .username');
+        if (usernameSpan && profile.name) {
+            usernameSpan.textContent = profile.name;
+        }
+
+        // profile.html null safe check
+        const nameInput = document.getElementById('display-name');
+        const emailInput = document.getElementById('display-email');
+        if (nameInput && profile.name) {
+            nameInput.value = profile.name;
+        }
+        if (emailInput && profile.email) {
+            emailInput.value = profile.email;
+        }
+    }
+
     // Initialize task system if on task-related page
     if (document.getElementById('task-list')) {
         await loadTasks();
