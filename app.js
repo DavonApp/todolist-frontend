@@ -338,18 +338,13 @@ function createTaskCard(isTodayPage = false, isCompletedPage = false, isUpcoming
                     });
 
                     if (!res.ok) {
-                        const errorText = await res.text(); 
-                        console.error(`Server error: ${res.status}`, errorText);
+                        console.error(`Server error: ${res.status}`, await res.text());
                         return;
                     }
 
                     if (!taskId) {
-                        const text = await res.text(); 
-
-                        if (text) {
-                            const created = await res.json();
-                            card.dataset.taskId = created.id;
-                        }
+                        const created = await res.json();
+                        card.dataset.taskId = created.id;
                     }
 
                 } catch (err) {
