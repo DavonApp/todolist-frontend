@@ -572,7 +572,7 @@ nav {
 
 .password-wrapper input {
     width: 100%;
-    padding-right: 40px; /* make room for the icon */
+    padding-right: 40px; 
 }
 
 .toggle-password {
@@ -589,8 +589,9 @@ nav {
 }
 
 .toggle-password:hover {
-    color: #6B0504; /* adjust to match your theme */
+    color: #6B0504; 
 }
+
 
 .signup-form-group input:focus {
     border-color: #6B0504;
@@ -683,6 +684,11 @@ nav {
 .login-form-group input:focus {
     border-color: #6B0504;
     box-shadow: 0 0 0 2px rgba(107, 5, 4, 0.15);
+}
+
+.login-form-group input::-webkit-contacts-auto-fill-button,
+.login-form-group input::-webkit-credentials-auto-fill-button {
+    margin-right: 30px;
 }
 
 .login-button {
