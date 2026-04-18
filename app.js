@@ -769,7 +769,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (!authCheck.ok && !isAuthPage) {
             localStorage.removeItem('jwt_token'); // clear bad token
-            window.location.hfef = 'login.html';
+            window.location.href = 'login.html';
             return;
         }
     }
