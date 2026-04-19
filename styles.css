@@ -691,6 +691,11 @@ nav {
     margin-right: 30px;
 }
 
+.forgot-password-form-group input::-webkit-contacts-auto-fill-button,
+.forgot-password-form-group input::-webkit-credentials-auto-fill-button {
+    margin-right: 30px;
+}
+
 .login-button {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
