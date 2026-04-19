@@ -966,11 +966,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             },
 
-            // Debug + interaction hooks for future features
-            select: function(info) {
-                console.log("Selected: " + info.startStr + " to " + info.endStr);
-            },
-
             eventClick: function(info) {
                 const {description, category, isCompleted } = info.event.extendedProps;
                 alert(
@@ -981,9 +976,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 );
             },
 
-            datesSet: function(info) {
-                console.log("Showing: " + info.view.title);
-            }
         });
 
         calendar.render();
