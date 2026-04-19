@@ -9,7 +9,7 @@ let calendar;
 const toggleButton = document.getElementById('toggle-btn');
 const sidebar = document.querySelector('.sidebar');
 
-const API_BASE = 'http://localhost:8080/api/tasks';
+const API_BASE = 'https://workcore-api.onrender.com/api/tasks';
 
 // Converts flatpickr's m/d/Y to yyyy-MM-dd that Java's LocalDate expects
 function formatDateForBackend(dateStr) {
@@ -58,7 +58,7 @@ document.getElementById("contact-form").addEventListener("submit", function(e) {
         message: document.querySelector("textarea[name='message']").value
     };
 
-    fetch("http://localhost:8080/api/contact", {
+    fetch("https://workcore-api.onrender.com/api/contact", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -153,7 +153,7 @@ function toggleSearch() {
 // ==========================
 
 async function logout() {
-    await fetch('http://localhost:8080/api/auth/logout', {
+    await fetch('https://workcore-api.onrender.com/api/auth/logout', {
         method: 'POST',
         credentials: 'include' // sends session cookie so backend can invalidate it
     });
@@ -434,7 +434,7 @@ async function deleteTask(btn) {
     const taskId = card.dataset.taskId;
 
     if (taskId) {
-        await fetch(`http://localhost:8080/api/tasks/${taskId}`, { 
+        await fetch(`https://workcore-api.onrender.com/api/tasks/${taskId}`, { 
             method: 'DELETE',
             headers: authHeaders(),
             credentials: 'include' // sends session cookie
@@ -500,7 +500,7 @@ function toggleEdit(inputId, btn) {
 
 async function saveProfileField(field, value) {
     try {
-        await fetch('http://localhost:8080/api/user/profile', {
+        await fetch('https://workcore-api.onrender.com/api/user/profile', {
             method: 'PUT',
             headers: authHeaders(),
             credentials: 'include',
@@ -581,7 +581,7 @@ async function savePassword() {
     }
 
     try {
-        const res = await fetch('http://localhost:8080/api/user/password', {
+        const res = await fetch('https://workcore-api.onrender.com/api/user/password', {
             method: 'PUT',
             headers: authHeaders(),
             credentials: 'include',
@@ -619,7 +619,7 @@ async function loadSettings() {
     if (!dateElement) return; // Exit if we aren't on the settings page
 
     try {
-        const res = await fetch('http://localhost:8080/api/user/profile', {
+        const res = await fetch('https://workcore-api.onrender.com/api/user/profile', {
             headers: authHeaders(),
             credentials: 'include'
         });
@@ -662,7 +662,7 @@ function toggleDeleteModal() {
 
 async function confirmDeleteAccount() {
     try {
-        const res = await fetch('http://localhost:8080/api/user/account', {
+        const res = await fetch('https://workcore-api.onrender.com/api/user/account', {
             method: 'DELETE',
             headers: authHeaders(),
             credentials: 'include' // Identifies the session
@@ -762,7 +762,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (token) {
-        const authCheck = await fetch('http://localhost:8080/api/auth/me', {
+        const authCheck = await fetch('https://workcore-api.onrender.com/api/auth/me', {
             headers: authHeaders(),
             credentials: 'include'
         });
@@ -776,7 +776,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     // Load profile on every page - populates sidebar and form fields if present
-    const profileRes = await fetch ('http://localhost:8080/api/user/profile', {
+    const profileRes = await fetch ('https://workcore-api.onrender.com/api/user/profile', {
         headers: authHeaders(),
         credentials: 'include'
     });

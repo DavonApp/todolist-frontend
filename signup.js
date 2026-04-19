@@ -4,7 +4,7 @@ document.getElementById('signup-form').addEventListener('submit', async function
     const email    = document.getElementById('email-address').value;
     const password = document.getElementById('password').value;
 
-    const res = await fetch('http://localhost:8080/api/auth/register', {
+    const res = await fetch('https://workcore-api.onrender.com/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
