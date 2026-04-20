@@ -155,9 +155,9 @@ function toggleSearch() {
 async function logout() {
     await fetch('https://workcore-api.onrender.com/api/auth/logout', {
         method: 'POST',
-        credentials: 'include' // sends session cookie so backend can invalidate it
+        headers: authHeaders()
     });
-
+    localStorage.removeItem('jwt_token'); // clear the token
     window.location.href = 'login.html';
 }
 
@@ -341,7 +341,6 @@ function createTaskCard(isTodayPage = false, isCompletedPage = false, isUpcoming
                     const res = await fetch(taskId ? `${API_BASE}/${taskId}` : API_BASE, {
                     method: taskId ? 'PUT' : 'POST',
                     headers: authHeaders(),
-                    credentials: 'include',
                     body: JSON.stringify(data)
                     });
 
@@ -414,7 +413,6 @@ async function toggleComplete(checkbox) {
         await fetch(`${API_BASE}/${taskId}`, {
             method: 'PUT',
             headers: authHeaders(),
-            credentials: 'include', // sends session cookie
             body: JSON.stringify(getTaskDataFromCard(card))
         });
     }
@@ -436,8 +434,7 @@ async function deleteTask(btn) {
     if (taskId) {
         await fetch(`https://workcore-api.onrender.com/api/tasks/${taskId}`, { 
             method: 'DELETE',
-            headers: authHeaders(),
-            credentials: 'include' // sends session cookie
+            headers: authHeaders()
         });
     }
 
@@ -503,7 +500,6 @@ async function saveProfileField(field, value) {
         await fetch('https://workcore-api.onrender.com/api/user/profile', {
             method: 'PUT',
             headers: authHeaders(),
-            credentials: 'include',
             body: JSON.stringify( {[field]: value})
         });
     } catch (err) {
@@ -584,7 +580,6 @@ async function savePassword() {
         const res = await fetch('https://workcore-api.onrender.com/api/user/password', {
             method: 'PUT',
             headers: authHeaders(),
-            credentials: 'include',
             body: JSON.stringify({
                 currentPassword: current,
                 newPassword: next
@@ -620,8 +615,7 @@ async function loadSettings() {
 
     try {
         const res = await fetch('https://workcore-api.onrender.com/api/user/profile', {
-            headers: authHeaders(),
-            credentials: 'include'
+            headers: authHeaders()
         });
         
         const profileData = await res.json();
@@ -664,8 +658,7 @@ async function confirmDeleteAccount() {
     try {
         const res = await fetch('https://workcore-api.onrender.com/api/user/account', {
             method: 'DELETE',
-            headers: authHeaders(),
-            credentials: 'include' // Identifies the session
+            headers: authHeaders()
         });
 
         if (res.ok) {
@@ -763,8 +756,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (token) {
         const authCheck = await fetch('https://workcore-api.onrender.com/api/auth/me', {
-            headers: authHeaders(),
-            credentials: 'include'
+            headers: authHeaders()
         });
 
         if (!authCheck.ok && !isAuthPage) {
@@ -777,8 +769,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Load profile on every page - populates sidebar and form fields if present
     const profileRes = await fetch ('https://workcore-api.onrender.com/api/user/profile', {
-        headers: authHeaders(),
-        credentials: 'include'
+        headers: authHeaders()
     });
 
     if (profileRes.ok) {
@@ -808,8 +799,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function loadTasks() {
     const res = await fetch(API_BASE, {
-        headers: authHeaders(),
-        credentials: 'include' // sends session cookie
+        headers: authHeaders()
     });
 
     if (!res.ok) {
@@ -930,8 +920,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             events: async function(fetchInfo, successCallback, failureCallback) {
                 try {
                     const res = await fetch(API_BASE, {
-                        headers: authHeaders(),
-                        credentials: 'include' // sends session cookie
+                        headers: authHeaders()
                     });
                     const tasks = await res.json();
 
