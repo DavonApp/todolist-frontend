@@ -781,6 +781,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             usernameSpan.textContent = profile.name;
         }
 
+        // Sync calendar greeting with profile name
+        const calendarGreeting = document.querySelector('.calendar-header h2');
+        if (calendarGreeting && profile.name) {
+            calendarGreeting.textContent = `Hello, ${profile.name}`;
+        }
+
         // profile.html null safe check
         const nameInput = document.getElementById('display-name');
         const emailInput = document.getElementById('display-email');
