@@ -2163,7 +2163,7 @@ span.flatpickr-weekday {
     .hero-section img {
         width: 80%;
         height: auto;
-        margin-top: 15px;
+        margin-top: 25px;
         margin-bottom: 20px;
     }
 
@@ -2191,6 +2191,25 @@ span.flatpickr-weekday {
         min-width: 100vh;
         height: auto;
         padding: 60px 20px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .about-content {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .about-content p {
+        font-size: 16px;
+        line-height: 1.7;
+        text-align: left;
+    }
+
+    .about-content h1,
+    .about-content h2 {
+        font-size: 28px;
+        text-align: center;
     }
 
     section {
