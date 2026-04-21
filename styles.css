@@ -1990,3 +1990,172 @@ span.flatpickr-weekday {
 .fc-header-toolbar {
     margin-bottom: 1.5em !important;
 }
+
+
+/* ==========================
+   MOBILE RESPONSIVE
+   ========================== */
+
+@media (max-width: 768px) {
+
+    /* Auth pages - shrink cards to fit screen */
+    .signup-content,
+    .email-signup-content,
+    .login-content,
+    .forgot-password-content,
+    .check-email-content {
+        width: 90%;
+        height: auto;
+        padding: 40px 20px;
+        margin: 20px auto;
+    }
+
+    .signup-form,
+    .login-form,
+    .forgot-password-form {
+        width: 80%;
+    }
+
+    .signup-google-button,
+    .signup-email-button,
+    .login-button,
+    .reset-password-button {
+        width: 80%;
+    }
+
+    .or-divider {
+        width: 80%;
+    }
+
+    /* Dashboard - stack sidebar and content vertically */
+    .dashboard-page {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-radius: 0;
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        overflow-x: auto;
+    }
+
+    .sidebar ul {
+        flex-direction: row;
+        gap: 0.5em;
+        flex-wrap: nowrap;
+    }
+
+    .sidebar.close {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .sidebar a span,
+    .sidebar .dropdown-btn span {
+        display: none;
+    }
+
+    .sidebar img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .sidebar-section-label,
+    .sidebar-divider {
+        display: none;
+    }
+
+    #toggle-li {
+        display: none;
+    }
+
+    /* Dashboard content */
+    .dashboard-content,
+    .calendar-content {
+        padding: 20px 15px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        max-width: 100%;
+    }
+
+    .task-list {
+        max-width: 100%;
+    }
+
+    /* Settings */
+    .settings-layout {
+        flex-direction: column;
+    }
+
+    .settings-nav {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 10px;
+    }
+
+    /* Landing page */
+    .hero-section {
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .hero-section img {
+        width: 80%;
+        height: auto;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .main-header {
+        padding: 10px 20px;
+    }
+
+    nav {
+        margin-left: 0;
+    }
+
+    .steps {
+        flex-direction: column;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .step-1, .step-2, .step-3 {
+        width: 100%;
+    }
+
+    #contact {
+        flex-direction: column;
+        gap: 40px;
+        padding: 60px 20px 40px 20px;
+    }
+
+    .contact-column1 {
+        gap: 40px;
+    }
+
+    .name-subject,
+    .company-email {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .how-it-works-header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 40px 20px;
+    }
+}
